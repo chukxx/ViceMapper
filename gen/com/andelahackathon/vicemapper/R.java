@@ -44,6 +44,14 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int adUnitId=0x7f010002;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int buttonBarButtonStyle=0x7f010012;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int buttonBarStyle=0x7f010011;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -84,6 +92,22 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int cameraZoom=0x7f010008;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int fontColor=0x7f010014;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int fontName=0x7f010013;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -176,8 +200,21 @@ containing a value of this type.
         public static final int common_signin_btn_light_text_disabled=0x7f040006;
         public static final int common_signin_btn_light_text_focused=0x7f040007;
         public static final int common_signin_btn_light_text_pressed=0x7f040005;
-        public static final int common_signin_btn_text_dark=0x7f04000a;
-        public static final int common_signin_btn_text_light=0x7f04000b;
+        public static final int common_signin_btn_text_dark=0x7f040017;
+        public static final int common_signin_btn_text_light=0x7f040018;
+        public static final int counter_text_bg=0x7f04000e;
+        public static final int counter_text_color=0x7f04000f;
+        public static final int genre=0x7f040010;
+        public static final int list_background=0x7f04000b;
+        public static final int list_background_pressed=0x7f04000c;
+        public static final int list_divider=0x7f04000d;
+        public static final int list_divider_main=0x7f040012;
+        public static final int list_item_title=0x7f04000a;
+        public static final int list_row_end_color=0x7f040014;
+        public static final int list_row_hover_end_color=0x7f040016;
+        public static final int list_row_hover_start_color=0x7f040015;
+        public static final int list_row_start_color=0x7f040013;
+        public static final int year=0x7f040011;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -214,22 +251,40 @@ containing a value of this type.
         public static final int common_signin_btn_text_normal_light=0x7f020015;
         public static final int common_signin_btn_text_pressed_dark=0x7f020016;
         public static final int common_signin_btn_text_pressed_light=0x7f020017;
-        public static final int ic_launcher=0x7f020018;
-        public static final int ic_plusone_medium_off_client=0x7f020019;
-        public static final int ic_plusone_small_off_client=0x7f02001a;
-        public static final int ic_plusone_standard_off_client=0x7f02001b;
-        public static final int ic_plusone_tall_off_client=0x7f02001c;
+        public static final int counter_bg=0x7f020018;
+        public static final int custom_list_selector=0x7f020019;
+        public static final int gradient_bg=0x7f02001a;
+        public static final int gradient_bg_hover=0x7f02001b;
+        public static final int ic_drawer=0x7f02001c;
+        public static final int ic_launcher=0x7f02001d;
+        public static final int ic_plusone_medium_off_client=0x7f02001e;
+        public static final int ic_plusone_small_off_client=0x7f02001f;
+        public static final int ic_plusone_standard_off_client=0x7f020020;
+        public static final int ic_plusone_tall_off_client=0x7f020021;
+        public static final int list_item_bg_normal=0x7f020022;
+        public static final int list_item_bg_pressed=0x7f020023;
+        public static final int list_row_bg=0x7f020024;
+        public static final int list_row_bg_hover=0x7f020025;
+        public static final int list_row_selector=0x7f020026;
+        public static final int list_selector=0x7f020027;
+        public static final int list_selector_slide=0x7f020028;
     }
     public static final class id {
-        public static final int action_settings=0x7f050008;
+        public static final int action_settings=0x7f05000e;
+        public static final int counter=0x7f05000c;
+        public static final int drawer=0x7f050007;
+        public static final int drawer_layout=0x7f050005;
         public static final int hybrid=0x7f050004;
-        public static final int map=0x7f050006;
+        public static final int icon=0x7f05000a;
+        public static final int list_slidermenu=0x7f050008;
+        public static final int map=0x7f050009;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int pager=0x7f050005;
+        public static final int pager=0x7f050006;
         public static final int satellite=0x7f050002;
-        public static final int section_label=0x7f050007;
+        public static final int section_label=0x7f05000d;
         public static final int terrain=0x7f050003;
+        public static final int title=0x7f05000b;
     }
     public static final class integer {
         public static final int google_play_services_version=0x7f070000;
@@ -237,7 +292,8 @@ containing a value of this type.
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_map_fragment=0x7f030001;
-        public static final int fragment_main_dummy=0x7f030002;
+        public static final int drawer_list_item=0x7f030002;
+        public static final int fragment_main_dummy=0x7f030003;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
@@ -340,7 +396,6 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f060013;
-        public static final int hello_world=0x7f060020;
         public static final int title_activity_map_fragment=0x7f06001f;
         public static final int title_section1=0x7f06001c;
         public static final int title_section2=0x7f06001d;
@@ -444,6 +499,46 @@ containing a value of this type.
           @attr name com.andelahackathon.vicemapper:adUnitId
         */
         public static final int AdsAttrs_adUnitId = 2;
+        /** 
+         Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels.
+    
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarButtonStyle com.andelahackathon.vicemapper:buttonBarButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarStyle com.andelahackathon.vicemapper:buttonBarStyle}</code></td><td></td></tr>
+           </table>
+           @see #ButtonBarContainerTheme_buttonBarButtonStyle
+           @see #ButtonBarContainerTheme_buttonBarStyle
+         */
+        public static final int[] ButtonBarContainerTheme = {
+            0x7f010011, 0x7f010012
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.andelahackathon.vicemapper.R.attr#buttonBarButtonStyle}
+          attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.andelahackathon.vicemapper:buttonBarButtonStyle
+        */
+        public static final int ButtonBarContainerTheme_buttonBarButtonStyle = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.andelahackathon.vicemapper.R.attr#buttonBarStyle}
+          attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.andelahackathon.vicemapper:buttonBarStyle
+        */
+        public static final int ButtonBarContainerTheme_buttonBarStyle = 0;
         /** Attributes that can be used with a MapAttrs.
            <p>Includes the following attributes:</p>
            <table>
@@ -688,5 +783,48 @@ containing a value of this type.
           @attr name com.andelahackathon.vicemapper:zOrderOnTop
         */
         public static final int MapAttrs_zOrderOnTop = 13;
+        /** Attributes that can be used with a TextView2.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #TextView2_fontColor com.andelahackathon.vicemapper:fontColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #TextView2_fontName com.andelahackathon.vicemapper:fontName}</code></td><td></td></tr>
+           </table>
+           @see #TextView2_fontColor
+           @see #TextView2_fontName
+         */
+        public static final int[] TextView2 = {
+            0x7f010013, 0x7f010014
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.andelahackathon.vicemapper.R.attr#fontColor}
+          attribute's value can be found in the {@link #TextView2} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.andelahackathon.vicemapper:fontColor
+        */
+        public static final int TextView2_fontColor = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.andelahackathon.vicemapper.R.attr#fontName}
+          attribute's value can be found in the {@link #TextView2} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.andelahackathon.vicemapper:fontName
+        */
+        public static final int TextView2_fontName = 0;
     };
 }
