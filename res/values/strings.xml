@@ -4,6 +4,7 @@
     <string name="app_name">Vice Mapper</string>
      <string name="action_stats">Stats</string>
     <string name="action_settings">Settings</string>
+    <string name="action_report_vice">Report Vice</string>
     <string name="title_section1">Map</string>
     <string name="title_section2">The Other</string>
     <string name="title_section3">Section 3</string>
@@ -11,7 +12,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="MAPS_API_KEY">AIzaSyDWz0w-tYVP7iFwQ4qt2xR18UMuhm80mwk</string>
-
+	
       <string-array name="nav_drawer_items">
         <item>Category 1</item>
         <item>Category 2</item>

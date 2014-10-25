@@ -6,6 +6,11 @@
         android:showAsAction="always"
         android:title="@string/action_stats"/>
     <item
+        android:id="@+id/action_report_vice"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/action_report_vice"/>
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"

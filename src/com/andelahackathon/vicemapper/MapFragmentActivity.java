@@ -282,12 +282,11 @@ public class MapFragmentActivity extends FragmentActivity {
 							
 							@Override
 							public void onMapClick(LatLng arg0) {
-								mapClick(arg0);
-								
+								mapClick(arg0);								
 							}
 						});
 					 	LatLng aloc = new LatLng(6.399, 3.35);
-					 	cameraUpdate  = CameraUpdateFactory.newLatLngZoom(aloc, 15f); //newCameraPosition(map.getCameraPosition());
+					 	cameraUpdate  = CameraUpdateFactory.newLatLngZoom(aloc, 20f); //newCameraPosition(map.getCameraPosition());
 					 	
 					 	map.animateCamera(cameraUpdate);
 					 	Vars.myLocation = map.getMyLocation();

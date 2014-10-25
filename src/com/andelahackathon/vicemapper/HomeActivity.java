@@ -190,15 +190,16 @@ public class HomeActivity extends FragmentActivity {
 			
 		break;
 		case 0:
-			try
-			{
-				startActivity(new Intent(getApplicationContext(),MapFragmentActivity.class));
-			}
-			catch(Exception e0)
-			{
-				Toast.makeText(getApplicationContext(), e0.toString(),Toast.LENGTH_LONG).show();
-				//e0.printStackTrace();
-			}
+			fragment = new MainScreen();
+//			try
+//			{
+//				startActivity(new Intent(getApplicationContext(),MapFragmentActivity.class));
+//			}
+//			catch(Exception e0)
+//			{
+//				Toast.makeText(getApplicationContext(), e0.toString(),Toast.LENGTH_LONG).show();
+//				//e0.printStackTrace();
+//			}
 			break;
 		
 
@@ -239,6 +240,15 @@ public class HomeActivity extends FragmentActivity {
 		return true;
 	}
 	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		// TODO Auto-generated method stub
+		if(item.getItemId() == R.id.action_report_vice)
+		{
+			startActivity(new Intent(this,ReportScreen.class));
+		}
+		return super.onMenuItemSelected(featureId, item);
+	}
 	 public boolean onOptionsItemSelected(MenuItem item) {
 			// toggle nav drawer on selecting action bar app icon/title
 			if (mDrawerToggle.onOptionsItemSelected(item)) {

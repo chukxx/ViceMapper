@@ -1,7 +1,9 @@
 package com.andelahackathon.vicemapper;
 
-import com.firebase.client.Firebase;
+import java.util.ArrayList;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.DataSnapshot;
 import android.location.Location;
 
 
@@ -24,6 +26,30 @@ public class Vars {
 	public static void getdb(Object o)
 	{
 		
+	}
+	private static String toLocation;
+	private static DataSnapshot snapRecords;
+
+	private static String fromLocation;
+	
+	public static void setDirectionSet(String fromLocation, String toLocation) {
+		Vars.toLocation = toLocation;
+		Vars.fromLocation = fromLocation;
+	}
+	
+	public static ArrayList<String> getDirectionSet() {
+		ArrayList<String> resultSet = new ArrayList<String>();
+		resultSet.add(Vars.toLocation);
+		resultSet.add(Vars.fromLocation);
+		return resultSet;
+	}
+	
+	public static DataSnapshot getSnapRecords() {
+		return snapRecords;
+	}
+
+	public static void setSnapRecords(DataSnapshot snapRecords) {
+		Vars.snapRecords = snapRecords;
 	}
 	
 }

@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="#00612e"
+    android:padding="20dp"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <Switch
+        android:id="@+id/currentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Use Current Location"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" />
+
+    <Button
+        android:id="@+id/reportBribery"
+        android:background="@color/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/currentLocation"
+        android:layout_marginTop="28dp"
+        android:text="Report Bribery"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" />
+
+    <Button
+        android:id="@+id/reportTheft"
+        android:background="@color/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reportBribery"
+        android:layout_marginTop="5dp"
+        android:text="Report Theft" 
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text"/>
+
+    <Button
+        android:id="@+id/reportRape"
+        android:background="@color/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reportTheft"
+        android:layout_marginTop="5dp"
+        android:text="Report Rape"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" />
+    
+    <Button
+        android:id="@+id/reportFight"
+        android:background="@color/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reportRape"
+        android:layout_marginTop="5dp"
+        android:text="Report Fight"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>

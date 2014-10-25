@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="#00612e"
+    android:padding="20dp"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/fromRouteText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logoImageView"
+        android:text="Enter Start Location"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" />
+
+    <AutoCompleteTextView
+        android:id="@+id/fromRoute"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fromRouteText"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" >
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <TextView
+        android:id="@+id/toRouteText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fromRoute"
+        android:layout_marginTop="20dp"
+        android:text="Enter Destination"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" />
+    
+    <AutoCompleteTextView
+        android:id="@+id/toRoute"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toRouteText"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" >
+    </AutoCompleteTextView>
+
+    <Button
+        android:id="@+id/searchRoutes"
+        android:background="@color/buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toRoute"
+        android:layout_marginTop="10dp"
+        android:text="Search Routes"
+        android:textColor="@color/white"
+        android:textSize="@dimen/default_text" />
+
+    <ImageView
+        android:id="@id/logoImageView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/vice_logo" />
+
+</RelativeLayout>
