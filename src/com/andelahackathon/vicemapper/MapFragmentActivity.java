@@ -38,6 +38,8 @@ import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -284,20 +286,23 @@ public class MapFragmentActivity extends FragmentActivity {
 								
 							}
 						});
-					 	cameraUpdate  = CameraUpdateFactory.newCameraPosition(map.getCameraPosition());
+					 	LatLng aloc = new LatLng(6.399, 3.35);
+					 	cameraUpdate  = CameraUpdateFactory.newLatLngZoom(aloc, 15f); //newCameraPosition(map.getCameraPosition());
 					 	
 					 	map.animateCamera(cameraUpdate);
 					 	Vars.myLocation = map.getMyLocation();
 					 	
-					 	LatLng aloc = new LatLng(6.499, 3.35);
+					 	
 					 	final Marker homeMarker = map.addMarker(new MarkerOptions()
 				        .position(aloc)
 				        .title("Bitches be trippin'").draggable(true).flat(true).snippet("A snippet text for the map view marker ishee"));
 					 	CircleOptions circleOptions = new CircleOptions()
 					    .center(aloc)
-					    .radius(200)
+					    .radius(500)
 					    .strokeWidth(1f);
 					 	
+					 	 final Circle circle = map.addCircle(circleOptions);
+						    circle.setFillColor(Color.RED);
 					 	map.setOnMyLocationChangeListener(new OnMyLocationChangeListener() {
 							
 							@Override
@@ -306,7 +311,7 @@ public class MapFragmentActivity extends FragmentActivity {
 								LatLng newpostion  = new LatLng(Vars.myLocation.getLatitude(), Vars.myLocation.getLongitude());
 								cameraUpdate = CameraUpdateFactory.newLatLng(newpostion);
 								homeMarker.setPosition(newpostion);
-								
+								circle.setCenter(newpostion);
 								map.animateCamera(cameraUpdate);
 							}
 						});
@@ -316,8 +321,7 @@ public class MapFragmentActivity extends FragmentActivity {
 					 	// In meters
 
 					// Get back the mutable Circle
-					    Circle circle = map.addCircle(circleOptions);
-					    circle.setFillColor(Color.RED);
+					   
 					    
 					    LatLng NEWARK = aloc;
 
@@ -371,5 +375,20 @@ public class MapFragmentActivity extends FragmentActivity {
 			
 			
 		}
+			@Override
+			public boolean onMenuItemSelected(int featureId, MenuItem item) {
+				// TODO Auto-generated method stub
+				
+				if(item.getItemId() == R.id.action_settings)
+				{
+					
+				}
+				return super.onMenuItemSelected(featureId, item);
+			}
+			public boolean onCreateOptionsMenu(Menu menu) {
+				// Inflate the menu; this adds items to the action bar if it is present.
+				getMenuInflater().inflate(R.menu.home, menu);
+				return true;
+			}
 
 }
