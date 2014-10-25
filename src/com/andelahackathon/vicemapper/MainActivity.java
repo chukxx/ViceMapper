@@ -124,6 +124,7 @@ public class MainActivity extends FragmentActivity implements
 			switch (position) {
 			case 0:
 				fragment = new MapFragmentActivity();
+
 				break;
 
 			default:

@@ -7,5 +7,26 @@
     <string name="title_section2">The Other</string>
     <string name="title_section3">Section 3</string>
     <string name="title_activity_map_fragment">Frag</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="MAPS_API_KEY">AIzaSyDWz0w-tYVP7iFwQ4qt2xR18UMuhm80mwk</string>
 
+      <string-array name="nav_drawer_items">
+        <item>Category 1</item>
+        <item>Category 2</item>
+        <item>Category 3</item>
+        <item>Category 4</item>
+        <item>Category 5</item>
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+	 </array>
+    
 </resources>
