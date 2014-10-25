@@ -10,10 +10,4 @@
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_report_vice"/>
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_settings"/>
-
-</menu>
+ </menu>
