@@ -37,10 +37,11 @@ public class MainActivity extends FragmentActivity implements
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-
+	public static MainActivity Instance = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Instance = this;
 		setContentView(R.layout.activity_main);
 
 		// Set up the action bar.
@@ -123,12 +124,12 @@ public class MainActivity extends FragmentActivity implements
 			Fragment fragment  = null;
 			switch (position) {
 			case 0:
-				fragment = new MapFragmentActivity();
+				//fragment = new MapFragmentActivity();
 
 				break;
 
 			default:
-				fragment = new MapFragmentActivity();
+				//fragment = new MapFragmentActivity();
 				break;
 			}
 			//Fragment fragment = new DummySectionFragment();
@@ -141,7 +142,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return 1;
 		}
 
 		@Override

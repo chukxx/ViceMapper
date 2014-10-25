@@ -180,15 +180,26 @@ public class HomeActivity extends FragmentActivity {
 		case 1:
 			try
 			{
-				startActivity(new Intent(getApplicationContext(),MainActivity.class));
+				//startActivity(new Intent(getApplicationContext(),MainActivity.class));
+			}
+			catch(Exception e0)
+			{
+				//Toast.makeText(getApplicationContext(), e0.toString(),Toast.LENGTH_LONG).show();
+				//e0.printStackTrace();
+			}
+			
+		break;
+		case 0:
+			try
+			{
+				startActivity(new Intent(getApplicationContext(),MapFragmentActivity.class));
 			}
 			catch(Exception e0)
 			{
 				Toast.makeText(getApplicationContext(), e0.toString(),Toast.LENGTH_LONG).show();
 				//e0.printStackTrace();
 			}
-			//return;
-		break;
+			break;
 		
 
 		default:

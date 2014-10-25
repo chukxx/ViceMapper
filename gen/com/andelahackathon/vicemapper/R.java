@@ -278,7 +278,7 @@ containing a value of this type.
         public static final int list_selector_slide=0x7f020028;
     }
     public static final class id {
-        public static final int action_settings=0x7f06000f;
+        public static final int action_settings=0x7f060010;
         public static final int counter=0x7f06000d;
         public static final int drawer=0x7f060007;
         public static final int drawer_layout=0x7f060005;
@@ -292,6 +292,7 @@ containing a value of this type.
         public static final int pager=0x7f060009;
         public static final int satellite=0x7f060002;
         public static final int section_label=0x7f06000e;
+        public static final int streetviewpanorama=0x7f06000f;
         public static final int terrain=0x7f060003;
         public static final int title=0x7f06000c;
     }
@@ -304,6 +305,7 @@ containing a value of this type.
         public static final int activity_map_fragment=0x7f030002;
         public static final int drawer_list_item=0x7f030003;
         public static final int fragment_main_dummy=0x7f030004;
+        public static final int street_view_fragment=0x7f030005;
     }
     public static final class menu {
         public static final int home=0x7f0c0000;
