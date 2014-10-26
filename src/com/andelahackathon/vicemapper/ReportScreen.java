@@ -23,10 +23,11 @@ import android.widget.Toast;
 
 public class ReportScreen extends Activity implements LocationListener {
 	private Button reportBribe;
-	private Firebase fb;
 	private Button reportRape;
 	private Button reportTheft;
 	private Button reportFight;
+	private Boolean isGPSEnabled, isNetworkEnabled;
+	private Location location;
 	protected LocationManager locationManager;
 	protected LocationListener locationListener;
 	
@@ -34,11 +35,38 @@ public class ReportScreen extends Activity implements LocationListener {
         super.onCreate(savedInstanceState);
         
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        
-        Firebase.setAndroidContext(this);
-        
-        fb = new Firebase("https://vicemapper.firebaseio.com");
+        if (locationManager != null) {
+	        isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+	        // getting network status
+	        isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+	        if (!isGPSEnabled && !isNetworkEnabled) {
+	            // no network provider is enabled
+	        	Toast.makeText(this, "Network Connection Problem", Toast.LENGTH_SHORT).show();
+	        } else {
+	            // this.canGetLocation = true;
+	            if (isNetworkEnabled) {
+	                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 10, this);
+	                if (locationManager != null) {
+	                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	                    if (location != null) {
+	                    	Vars.setCurrentLocation(location.getLongitude(), location.getLatitude());
+	                    }
+	                }
+	            }
+	            // if GPS Enabled get lat/long using GPS Services
+	            if (isGPSEnabled) {
+	                if (location == null) {
+	                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 10, this);
+	                    if (locationManager != null) {
+	                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	                        if (location != null) {
+	                        	Vars.setCurrentLocation(location.getLongitude(), location.getLatitude());
+	                        }
+	                    }
+	                }
+	            }
+	        }
+        }
         
         setContentView(R.layout.activity_report_screen);
         
@@ -99,7 +127,7 @@ public class ReportScreen extends Activity implements LocationListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				isLoading(true);
-				Toast.makeText(v.getContext(), "Posting new Bribery Act", Toast.LENGTH_SHORT).show();
+				Toast.makeText(v.getContext(), "Posting Vice", Toast.LENGTH_SHORT).show();
 				Long currentTimeStamp = System.currentTimeMillis()/1000;
 				// Get Device Location if the switch is turned on
 				
@@ -109,6 +137,7 @@ public class ReportScreen extends Activity implements LocationListener {
 				report.put("location", location);
 				report.put("timestamp", currentTimeStamp);
 				report.put("vice", type);
+<<<<<<< HEAD
 				fb.child("vice").push().setValue(report);
 				
 				//LISTEN FOR REALTIME CHANGES
@@ -121,6 +150,12 @@ public class ReportScreen extends Activity implements LocationListener {
 				    @Override
 				    public void onCancelled(FirebaseError error) { }
 				});
+=======
+				Vars.dbcon().child("vice").push().setValue(report);
+				isLoading(false);
+				finish();
+				
+>>>>>>> 26be0f870ea22e9e1a79005db27d8860be88504f
 			}
 		};
 	}

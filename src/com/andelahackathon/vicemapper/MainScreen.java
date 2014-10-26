@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainScreen extends Fragment {
@@ -57,9 +58,12 @@ public class MainScreen extends Fragment {
  			
  			@Override
  			public void onClick(View v) {
- 				
- 				Vars.setDirectionSet(fromLocation, toLocation);
- 				startActivity(new Intent(HomeActivity.Instance,MapFragmentActivity.class));
+ 				if(getToLocation().equals("") || getFromLocation().equals("")) {
+ 					Toast.makeText(v.getContext(), "You need to make a selection to get started", Toast.LENGTH_LONG).show();
+ 				} else {
+	 				Vars.setDirectionSet(fromLocation, toLocation);
+	 				startActivity(new Intent(HomeActivity.Instance,MapFragmentActivity.class));
+ 				}
  			}
  		});
 
