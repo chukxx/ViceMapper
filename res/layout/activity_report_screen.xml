@@ -1,11 +1,18 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:background="#00612e"
-    android:padding="20dp"
+    android:padding="0dp"
+    android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        class="com.google.android.gms.maps.MapFragment" />
+    
     <Button
         android:id="@+id/reportBribery"
         android:layout_width="fill_parent"
@@ -49,4 +56,4 @@
         android:textColor="@color/white"
         android:textSize="@dimen/default_text" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -110,12 +110,13 @@ public class ReportScreen extends Activity implements LocationListener {
 				report.put("timestamp", currentTimeStamp);
 				report.put("vice", type);
 				fb.child("vice").push().setValue(report);
-				isLoading(false);
+				
 				//LISTEN FOR REALTIME CHANGES
 				fb.addValueEventListener(new ValueEventListener() {
 				    @Override
 				    public void onDataChange(DataSnapshot snap) {
 				    	Vars.setSnapRecords(snap);
+				    	isLoading(false);
 				    }
 				    @Override
 				    public void onCancelled(FirebaseError error) { }
