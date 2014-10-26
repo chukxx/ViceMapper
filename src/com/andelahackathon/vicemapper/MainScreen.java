@@ -2,6 +2,8 @@ package com.andelahackathon.vicemapper;
 
 
 
+import com.andelahackathon.vicemapper.adapter.PlacesAutoCompleteAdapter;
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +14,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-
-import com.andelahackathon.vicemapper.adapter.PlacesAutoCompleteAdapter;
 
 
 public class MainScreen extends Fragment {

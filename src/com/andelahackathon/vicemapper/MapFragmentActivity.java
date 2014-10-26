@@ -1,4 +1,5 @@
 package com.andelahackathon.vicemapper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,26 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-<<<<<<< HEAD
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
-
-=======
->>>>>>> b2192c558e222a2ed0a2732913655b4879fff303
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -61,6 +42,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 
@@ -83,7 +65,8 @@ public class MapFragmentActivity extends FragmentActivity {
 	private String getDirectionsUrl(/*LatLng origin,LatLng dest*/){
 		 
         // Origin of route
-        String str_origin = "origin="+URLEncoder.encode(Vars.getDirectionSet().get(1));//+origin.latitude+","+origin.longitude;
+       
+		String str_origin = "origin="+URLEncoder.encode(Vars.getDirectionSet().get(1));//+origin.latitude+","+origin.longitude;
  
         // Destination of route
         String str_dest = "destination="+URLEncoder.encode(Vars.getDirectionSet().get(0));//dest.latitude+","+dest.longitude;
