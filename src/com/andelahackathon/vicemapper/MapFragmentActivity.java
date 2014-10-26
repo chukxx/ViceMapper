@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import nma.tablet.R;
 
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,9 +40,12 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 
 public class MapFragmentActivity extends FragmentActivity {
@@ -69,7 +72,7 @@ public class MapFragmentActivity extends FragmentActivity {
         String str_dest = "destination="+URLEncoder.encode(Vars.getDirectionSet().get(0));//dest.latitude+","+dest.longitude;
  
         // Sensor enabled
-        String sensor = "sensor=false";
+        String sensor = "sensor=false&alternatives=true";
  
         // Building the parameters to the web service
         String parameters = str_origin+"&"+str_dest+"&"+sensor;
@@ -151,17 +154,51 @@ public class MapFragmentActivity extends FragmentActivity {
         }
     }
     
-    private void populateRouteList ()
+    private void populateRouteList (final JSONObject jObject )
     {
-    	String [] routes;
-    	ListView lv = (ListView)findViewById(R.id.RouteList);
-		final ArrayAdapter<String> ladapter = new ArrayAdapter<String>(getBaseContext(),R.layout.route_list, R.id.route_desc, routes);
-		lv.setAdapter(ladapter);
+    	runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try
+		    	{
+			    	JSONArray _routes = jObject.getJSONArray("routes");
+			    	String [] routes = new String[_routes.length()];
+			    	for(int i = 0; i < _routes.length();i++)
+			    	{
+			    		JSONObject legs = _routes.getJSONObject(i).getJSONArray("legs").getJSONObject(0);
+			    		routes[i] = _routes.getJSONObject(i).getString("summary") + " - "+legs.getJSONObject("distance").getString("text") + " in " +legs.getJSONObject("duration").getString("text") ;
+			    	}
+			    	showForNow(routes.toString());
+			    	ListView lv = (ListView)findViewById(R.id.RouteList);
+			    	
+					final ArrayAdapter<String> ladapter = new ArrayAdapter<String>(getBaseContext(),R.layout.route_list, R.id.route_desc, routes);
+					lv.setAdapter(ladapter);
+					
+					lv.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int position, long arg3) {
+							//String vname = ladapter.getItem(position);
+							showForNow(position+" position");
+							
+						}});
+		    		
+		    	}
+		    	catch(Exception e0)
+		    	{
+		    		
+		    	}
+			}
+		});
+    	
     }
     private void getRouteObject(JSONObject jObject)
     {
     	try
     	{
+    		 populateRouteList(jObject);
 	    	 final JSONObject locations = jObject.getJSONArray("routes").getJSONObject(0).getJSONArray("legs").getJSONObject(0);
 	         final JSONObject start_location = locations.getJSONObject("start_location");
 	         final JSONObject end_location = locations.getJSONObject("end_location");
