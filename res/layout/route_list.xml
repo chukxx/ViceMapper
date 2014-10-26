@@ -11,5 +11,5 @@
 	<com.andelahackathon.vicemapper.TextView2 android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:padding="5dp" android:textStyle="bold" android:textSize="15sp"
 		 android:id="@+id/route_desc"
-		android:text="Routes" android:textColor="#336699"/>
+		android:text="Routes" android:textColor="#777777"/>
 </LinearLayout>

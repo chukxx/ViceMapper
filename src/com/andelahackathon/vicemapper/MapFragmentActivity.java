@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.graphics.Color;
@@ -63,6 +64,7 @@ public class MapFragmentActivity extends FragmentActivity {
 //	        view = rootView;
 //	        return rootView;
 //	}
+	
 	private String getDirectionsUrl(/*LatLng origin,LatLng dest*/){
 		 
         // Origin of route
@@ -148,7 +150,7 @@ public class MapFragmentActivity extends FragmentActivity {
             super.onPostExecute(result);
  
             ParserTask parserTask = new ParserTask();
- 
+            routeResult = result;
             // Invokes the thread for parsing the JSON data
             parserTask.execute(result);
         }
@@ -169,7 +171,7 @@ public class MapFragmentActivity extends FragmentActivity {
 			    		JSONObject legs = _routes.getJSONObject(i).getJSONArray("legs").getJSONObject(0);
 			    		routes[i] = _routes.getJSONObject(i).getString("summary") + " - "+legs.getJSONObject("distance").getString("text") + " in " +legs.getJSONObject("duration").getString("text") ;
 			    	}
-			    	showForNow(routes.toString());
+			    	//showForNow(routes.toString());
 			    	ListView lv = (ListView)findViewById(R.id.RouteList);
 			    	
 					final ArrayAdapter<String> ladapter = new ArrayAdapter<String>(getBaseContext(),R.layout.route_list, R.id.route_desc, routes);
@@ -182,7 +184,11 @@ public class MapFragmentActivity extends FragmentActivity {
 								int position, long arg3) {
 							//String vname = ladapter.getItem(position);
 							showForNow(position+" position");
-							
+							routePosition = position;
+							if(routePolyline!=null)
+								routePolyline.remove();
+							ParserTask parserTask = new ParserTask();
+				            parserTask.execute(routeResult);
 						}});
 		    		
 		    	}
@@ -194,6 +200,9 @@ public class MapFragmentActivity extends FragmentActivity {
 		});
     	
     }
+    private int routePosition = 0;
+    private String routeResult = "";
+    private Polyline routePolyline = null;
     private void getRouteObject(JSONObject jObject)
     {
     	try
@@ -261,16 +270,16 @@ public class MapFragmentActivity extends FragmentActivity {
             PolylineOptions lineOptions = null;
             MarkerOptions markerOptions = new MarkerOptions();
 
-            //showForNow(result == null ?"no result" :result.toString());
+            showForNow(result == null ?"no result" :result.size()  + " size");
             if(result == null)
             	return;
             // Traversing through all the routes
-            for(int i=0;i<result.size();i++){
+           // for(int i=0;i<result.size();i++){
                 points = new ArrayList<LatLng>();
                 lineOptions = new PolylineOptions();
  
                 // Fetching i-th route
-                List<HashMap<String, String>> path = result.get(i);
+                List<HashMap<String, String>> path = result.get(routePosition);
  
                 // Fetching all the points in i-th route
                 for(int j=0;j<path.size();j++){
@@ -287,10 +296,11 @@ public class MapFragmentActivity extends FragmentActivity {
                 lineOptions.addAll(points);
                 lineOptions.width(5);
                 lineOptions.color(Color.RED);
-            }
+           // }
  
             // Drawing polyline in the Google Map for the i-th route
-            map.addPolyline(lineOptions);
+                routePolyline = map.addPolyline(lineOptions);
+            
         }
     }
  
@@ -364,7 +374,7 @@ public class MapFragmentActivity extends FragmentActivity {
 							@Override
 							public void onMyLocationChange(Location arg0) {
 								Vars.myLocation = arg0;
-								showForNow("new location "+ arg0.toString());
+								//showForNow("new location "+ arg0.toString());
 							//	LatLng newpostion  = new LatLng(Vars.myLocation.getLatitude(), Vars.myLocation.getLongitude());
 							//	cameraUpdate = CameraUpdateFactory.newLatLng(newpostion);
 							//	homeMarker.setPosition(newpostion);
