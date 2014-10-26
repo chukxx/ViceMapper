@@ -307,11 +307,11 @@ public class MapFragmentActivity extends FragmentActivity {
 							@Override
 							public void onMyLocationChange(Location arg0) {
 								Vars.myLocation = arg0;
-								LatLng newpostion  = new LatLng(Vars.myLocation.getLatitude(), Vars.myLocation.getLongitude());
-								cameraUpdate = CameraUpdateFactory.newLatLng(newpostion);
-								homeMarker.setPosition(newpostion);
+							//	LatLng newpostion  = new LatLng(Vars.myLocation.getLatitude(), Vars.myLocation.getLongitude());
+							//	cameraUpdate = CameraUpdateFactory.newLatLng(newpostion);
+							//	homeMarker.setPosition(newpostion);
 							//	circle.setCenter(newpostion);
-								map.animateCamera(cameraUpdate);
+							//	map.animateCamera(cameraUpdate);
 							}
 						});
 					 	

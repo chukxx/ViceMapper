@@ -1,10 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:background="#00612e"
-    android:padding="20dp"
-    tools:context="${relativePackage}.${activityClass}" >
+    android:layout_height="fill_parent"
+     android:background="#00612e"
+     android:scrollbars="vertical"
+     android:overScrollMode="always"
+    >
+<RelativeLayout
+
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"   
+    android:padding="20dp" >
 
     <TextView
         android:id="@+id/fromRouteText"
@@ -65,4 +71,5 @@
         android:layout_height="wrap_content"
         android:src="@drawable/vice_logo" />
 
-</RelativeLayout>
+</RelativeLayout>    
+</ScrollView>
