@@ -6,6 +6,13 @@ import info.androidhive.slidingmenu.model.NavDrawerItem;
 import java.util.ArrayList;
 
 
+
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.Fragment;
@@ -48,6 +55,18 @@ public class HomeActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Firebase.setAndroidContext(this);
+		
+		Vars.dbcon().addValueEventListener(new ValueEventListener() {
+		    @Override
+		    public void onDataChange(DataSnapshot snap) {
+		    	Vars.setSnapRecords(snap);
+		    }
+		    @Override
+		    public void onCancelled(FirebaseError error) { }
+		});
+		
 		Instance = this;
 		setContentView(R.layout.activity_home);
 		mTitle = mDrawerTitle = getTitle();
