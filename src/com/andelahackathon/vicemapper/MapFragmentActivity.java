@@ -300,8 +300,8 @@ public class MapFragmentActivity extends FragmentActivity {
 					    .radius(500)
 					    .strokeWidth(1f);
 					 	
-					 	 final Circle circle = map.addCircle(circleOptions);
-						    circle.setFillColor(Color.RED);
+					 	// final Circle circle = map.addCircle(circleOptions);
+						 //   circle.setFillColor(Color.RED);
 					 	map.setOnMyLocationChangeListener(new OnMyLocationChangeListener() {
 							
 							@Override
@@ -310,7 +310,7 @@ public class MapFragmentActivity extends FragmentActivity {
 								LatLng newpostion  = new LatLng(Vars.myLocation.getLatitude(), Vars.myLocation.getLongitude());
 								cameraUpdate = CameraUpdateFactory.newLatLng(newpostion);
 								homeMarker.setPosition(newpostion);
-								circle.setCenter(newpostion);
+							//	circle.setCenter(newpostion);
 								map.animateCamera(cameraUpdate);
 							}
 						});

@@ -10,8 +10,10 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Switch;
@@ -37,7 +39,39 @@ public class ReportScreen extends Activity {
         
         loadWidgets();
     }
-	
+	private Dialog loading= null;
+	public void isLoading(final boolean b)
+    {
+    	runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try
+				{
+			    	if(loading==null)
+			    	{
+			    		loading = new Dialog(getApplicationContext());
+			    		loading.setTitle("Working...");
+			    		loading.setCancelable(false);
+			    		loading.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			    		loading.setContentView(R.layout.loading_dialog);
+			    	}
+			    
+			    	if(loading!=null)
+			    	{
+			    		try
+			    		{
+			    			if(b&&!loading.isShowing())loading.show();
+			    			else loading.cancel();
+			    		}
+			    		catch(Exception e0){}
+			    	}
+		    	}
+		    	catch(Exception eo){}
+			}
+		});
+    }
+
 	private void loadWidgets() {
 		useCurrentLocation = (Switch) findViewById(R.id.currentLocation);
 		

@@ -139,7 +139,8 @@ int layout activity_report_screen 0x7f030004
 int layout autocomplete_list_item 0x7f030005
 int layout drawer_list_item 0x7f030006
 int layout fragment_main_dummy 0x7f030007
-int layout street_view_fragment 0x7f030008
+int layout loading_dialog 0x7f030008
+int layout street_view_fragment 0x7f030009
 int menu home 0x7f0c0000
 int menu main 0x7f0c0001
 int menu map 0x7f0c0002
