@@ -222,7 +222,7 @@ public class MapFragmentActivity extends FragmentActivity {
 			    		//v = v.substring(0,v.length()-2);
 			    		HashMap<String,String> map = new HashMap<String, String>();
 			    		JSONObject legs = _routes.getJSONObject(i).getJSONArray("legs").getJSONObject(0);
-						map.put("routeDesc",_routes.getJSONObject(i).getString("summary"));
+						map.put("routeDesc",_routes.getJSONObject(i).getString("summary")+" - "+legs.getJSONObject("distance").getString("text"));
 						map.put("viceDesc", v);
 						map.put("viceCount", total+"");
 						map.put("distance",legs.getJSONObject("distance").getString("text"));
@@ -250,7 +250,8 @@ public class MapFragmentActivity extends FragmentActivity {
 							//Integer.get(routeDataCollection.get(position).get("viceDesc"))
 							//String vname = ladapter.getItem(position);
 							//showForNow(position+" position");
-							showForNow(routeDataCollection.get(position).get("viceDesc"));
+							if(routeDataCollection.get(position).get("viceDesc").length() > 2)
+								showForNow(routeDataCollection.get(position).get("viceDesc"));
 							routePosition = position;
 							if(routePolyline!=null)
 								routePolyline.remove();
@@ -431,13 +432,13 @@ public class MapFragmentActivity extends FragmentActivity {
 					 	//Vars.myLocation = map.getMyLocation();
 					 	
 					 	
-					 	final Marker homeMarker = map.addMarker(new MarkerOptions()
-				        .position(aloc)
-				        .title("Bitches be trippin'").draggable(true).flat(true).snippet("A snippet text for the map view marker ishee"));
-					 	CircleOptions circleOptions = new CircleOptions()
-					    .center(aloc)
-					    .radius(500)
-					    .strokeWidth(1f);
+//					 	final Marker homeMarker = map.addMarker(new MarkerOptions()
+//				        .position(aloc)
+//				        .title("Bitches be trippin'").draggable(true).flat(true).snippet("A snippet text for the map view marker ishee"));
+//					 	CircleOptions circleOptions = new CircleOptions()
+//					    .center(aloc)
+//					    .radius(500)
+//					    .strokeWidth(1f);
 					 	
 					 	// final Circle circle = map.addCircle(circleOptions);
 						 //   circle.setFillColor(Color.RED);
@@ -489,12 +490,12 @@ public class MapFragmentActivity extends FragmentActivity {
 					 			LatLng pos = new LatLng(lat, lng);
 					 			String vice = child.child("vice").getValue().toString();
 					 			
-					 		    GroundOverlayOptions newarkMap = new GroundOverlayOptions()
-					            .image(BitmapDescriptorFactory.fromResource(R.drawable.marker))
-					            .position(pos, 128f, 128f);
+//					 		    GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+//					            .image(BitmapDescriptorFactory.fromResource(R.drawable.marker))
+//					            .position(pos, 128f, 128f);
 					 		    
-					 		    map.addGroundOverlay(newarkMap);
-					 			//map.addMarker(new MarkerOptions().position(pos).title(vice).snippet("Niggas be rappin'"));
+					 		   // map.addGroundOverlay(newarkMap);
+					 			map.addMarker(new MarkerOptions().position(pos).title(vice).snippet("Probable crime scence").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 					 			vices.add(new JSONObject("{'vice':'"+vice+"','lat':'"+lat+"','lng':'"+lng+"'}"));
 					 			//_vices += "[{'lng':'','lat':'','vice':''}]";
 					 		}
@@ -536,10 +537,10 @@ public class MapFragmentActivity extends FragmentActivity {
 				{
 					startActivity(new Intent(this,ReportScreen.class));
 				}
-				if(item.getItemId() == R.id.action_stats)
-				{
-					//startActivity(new Intent(this,ReportScreen.class));
-				}
+//				if(item.getItemId() == R.id.action_stats)
+//				{
+//					//startActivity(new Intent(this,ReportScreen.class));
+//				}
 				return super.onMenuItemSelected(featureId, item);
 			}
 			public boolean onCreateOptionsMenu(Menu menu) {

@@ -97,7 +97,7 @@ public class ReportScreen extends FragmentActivity implements LocationListener {
 	 	map.setMyLocationEnabled(true);
 	 	
 	 	map.getUiSettings().setMyLocationButtonEnabled(true);
-	 	locationMarker = map.addMarker(new MarkerOptions().position(new LatLng(6.45,3.44)).title("Crime Location").snippet("Select the location, where crime was detected"));
+	 	locationMarker = map.addMarker(new MarkerOptions().position(new LatLng(6.5101f,3.386f)).title("Crime Location").snippet("Select the location, where crime was detected"));
 	 	cameraUpdate = CameraUpdateFactory.newLatLngZoom(locationMarker.getPosition(), 15f);
 	 	map.animateCamera(cameraUpdate);
 	 	

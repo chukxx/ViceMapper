@@ -283,14 +283,14 @@ containing a value of this type.
         public static final int list_selector=0x7f02002a;
         public static final int list_selector_slide=0x7f02002b;
         public static final int marker=0x7f02002c;
-        public static final int vice_logo=0x7f02002d;
+        public static final int robbery_icon=0x7f02002d;
+        public static final int vice_logo=0x7f02002e;
     }
     public static final class id {
         public static final int LinearLayout01=0x7f06001a;
         public static final int RouteList=0x7f060011;
-        public static final int action_report_vice=0x7f060022;
-        public static final int action_settings=0x7f060023;
-        public static final int action_stats=0x7f060021;
+        public static final int action_report_vice=0x7f060021;
+        public static final int action_settings=0x7f060022;
         public static final int counter=0x7f060018;
         public static final int drawer=0x7f060007;
         public static final int drawer_layout=0x7f060005;

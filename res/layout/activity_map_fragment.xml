@@ -27,9 +27,10 @@
         <ListView android:id="@+id/RouteList" 
             android:layout_width="fill_parent"
             android:listSelector="#222222"
-            android:background="#FFFFFF"
+            android:background="#EFEFEF"
             android:layout_alignParentBottom="true"
             android:layout_height="128dp"
+            android:padding="7dp"
  
             ></ListView>
     </RelativeLayout>

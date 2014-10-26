@@ -69,7 +69,9 @@
         android:id="@id/logoImageView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/vice_logo" />
+        android:src="@drawable/vice_logo" 
+        android:layout_marginBottom="50dp"
+        />
 
 </RelativeLayout>    
 </ScrollView>

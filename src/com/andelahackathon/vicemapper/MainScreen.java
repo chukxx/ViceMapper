@@ -58,11 +58,18 @@ public class MainScreen extends Fragment {
  			
  			@Override
  			public void onClick(View v) {
- 				if(getToLocation().equals("") || getFromLocation().equals("")) {
+ 				try
+ 				{
+	 				if(getToLocation().equals("") || getFromLocation().equals("")) {
+	 					Toast.makeText(v.getContext(), "You need to make a selection to get started", Toast.LENGTH_LONG).show();
+	 				} else {
+		 				Vars.setDirectionSet(fromLocation, toLocation);
+		 				startActivity(new Intent(HomeActivity.Instance,MapFragmentActivity.class));
+	 				}
+ 				}
+ 				catch(Exception e)
+ 				{
  					Toast.makeText(v.getContext(), "You need to make a selection to get started", Toast.LENGTH_LONG).show();
- 				} else {
-	 				Vars.setDirectionSet(fromLocation, toLocation);
-	 				startActivity(new Intent(HomeActivity.Instance,MapFragmentActivity.class));
  				}
  			}
  		});

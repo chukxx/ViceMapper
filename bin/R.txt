@@ -100,12 +100,12 @@ int drawable list_row_selector 0x7f020029
 int drawable list_selector 0x7f02002a
 int drawable list_selector_slide 0x7f02002b
 int drawable marker 0x7f02002c
-int drawable vice_logo 0x7f02002d
+int drawable robbery_icon 0x7f02002d
+int drawable vice_logo 0x7f02002e
 int id LinearLayout01 0x7f06001a
 int id RouteList 0x7f060011
-int id action_report_vice 0x7f060022
-int id action_settings 0x7f060023
-int id action_stats 0x7f060021
+int id action_report_vice 0x7f060021
+int id action_settings 0x7f060022
 int id counter 0x7f060018
 int id drawer 0x7f060007
 int id drawer_layout 0x7f060005

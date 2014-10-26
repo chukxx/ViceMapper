@@ -88,10 +88,10 @@ public class HomeActivity extends FragmentActivity {
 			try
 			{
 
-				for(int i=0;i<navMenuTitles.length;i++)
-				{
-					navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i+1, 0)));
-				}
+//				for(int i=0;i<navMenuTitles.length;i++)
+//				{
+//					navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i+1, 0)));
+//				}
 			}
 			catch(Exception e0)
 			{
@@ -266,10 +266,10 @@ public class HomeActivity extends FragmentActivity {
 		{
 			startActivity(new Intent(this,ReportScreen.class));
 		}
-		if(item.getItemId() == R.id.action_stats)
-		{
-			//startActivity(new Intent(this,ReportScreen.class));
-		}
+//		if(item.getItemId() == R.id.action_stats)
+//		{
+//			//startActivity(new Intent(this,ReportScreen.class));
+//		}
 		return super.onMenuItemSelected(featureId, item);
 	}
 	 public boolean onOptionsItemSelected(MenuItem item) {
