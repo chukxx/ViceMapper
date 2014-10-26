@@ -261,7 +261,7 @@ public class MapFragmentActivity extends FragmentActivity {
             PolylineOptions lineOptions = null;
             MarkerOptions markerOptions = new MarkerOptions();
 
-            //showForNow(result == null ?"no result" :result.toString());
+            showForNow(result == null ?"no result" :result.size()  + " size");
             if(result == null)
             	return;
             // Traversing through all the routes
