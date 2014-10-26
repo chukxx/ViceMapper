@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.Toast;
 
 public class ReportScreen extends Activity implements LocationListener {
@@ -30,12 +29,14 @@ public class ReportScreen extends Activity implements LocationListener {
 	private Button reportRape;
 	private Button reportTheft;
 	private Button reportFight;
-	private LocationManager lm;
-	private String provider;
-	private Location location;
+	protected LocationManager locationManager;
+	protected LocationListener locationListener;
 	
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         
         Firebase.setAndroidContext(this);
         
@@ -80,19 +81,7 @@ public class ReportScreen extends Activity implements LocationListener {
 		});
     }
 
-	private void loadWidgets() {
-        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        Criteria c = new Criteria();
-        provider = lm.getBestProvider(c, false);
-        location = lm.getLastKnownLocation(provider);
-        
-        if(location != null) {
-        	//get latitude and longitude of the location
-        	Vars.setCurrentLocation(location.getLongitude(), location.getLatitude());
-        } else {
-        	// Report Error
-        }
-        
+	private void loadWidgets() {        
 		reportBribe = (Button) findViewById(R.id.reportBribery);
 		reportRape = (Button) findViewById(R.id.reportRape);
 		reportTheft = (Button) findViewById(R.id.reportTheft);
@@ -138,7 +127,7 @@ public class ReportScreen extends Activity implements LocationListener {
 	}
 
 	@Override
-	public void onLocationChanged(Location arg0) {
+	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
 		Vars.setCurrentLocation(location.getLongitude(), location.getLatitude());
 	}

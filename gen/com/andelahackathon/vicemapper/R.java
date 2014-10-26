@@ -451,24 +451,25 @@ containing a value of this type.
         public static final int custom_list_selector=0x7f02001b;
         public static final int gradient_bg=0x7f02001c;
         public static final int gradient_bg_hover=0x7f02001d;
-        public static final int ic_drawer=0x7f02001e;
-        public static final int ic_launcher=0x7f02001f;
-        public static final int ic_main_app_logo=0x7f020020;
-        public static final int ic_plusone_medium_off_client=0x7f020021;
-        public static final int ic_plusone_small_off_client=0x7f020022;
-        public static final int ic_plusone_standard_off_client=0x7f020023;
-        public static final int ic_plusone_tall_off_client=0x7f020024;
-        public static final int ic_vicemapper_logo=0x7f020025;
-        public static final int list_item_bg_normal=0x7f020026;
-        public static final int list_item_bg_pressed=0x7f020027;
-        public static final int list_row_bg=0x7f020028;
-        public static final int list_row_bg_hover=0x7f020029;
-        public static final int list_row_selector=0x7f02002a;
-        public static final int list_selector=0x7f02002b;
-        public static final int list_selector_slide=0x7f02002c;
-        public static final int powered_by_google_dark=0x7f02002d;
-        public static final int powered_by_google_light=0x7f02002e;
-        public static final int vice_logo=0x7f02002f;
+        public static final int home_icon=0x7f02001e;
+        public static final int ic_drawer=0x7f02001f;
+        public static final int ic_launcher=0x7f020020;
+        public static final int ic_main_app_logo=0x7f020021;
+        public static final int ic_plusone_medium_off_client=0x7f020022;
+        public static final int ic_plusone_small_off_client=0x7f020023;
+        public static final int ic_plusone_standard_off_client=0x7f020024;
+        public static final int ic_plusone_tall_off_client=0x7f020025;
+        public static final int ic_vicemapper_logo=0x7f020026;
+        public static final int list_item_bg_normal=0x7f020027;
+        public static final int list_item_bg_pressed=0x7f020028;
+        public static final int list_row_bg=0x7f020029;
+        public static final int list_row_bg_hover=0x7f02002a;
+        public static final int list_row_selector=0x7f02002b;
+        public static final int list_selector=0x7f02002c;
+        public static final int list_selector_slide=0x7f02002d;
+        public static final int powered_by_google_dark=0x7f02002e;
+        public static final int powered_by_google_light=0x7f02002f;
+        public static final int vice_logo=0x7f020030;
     }
     public static final class id {
         public static final int LinearLayout01=0x7f080029;
@@ -702,9 +703,15 @@ containing a value of this type.
          */
         public static final int AppBaseTheme=0x7f050005;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f050006;
+        /**  ActionBar styles 
+         */
+        public static final int MyActionBar=0x7f050007;
+        public static final int MyActionBarTabText=0x7f050009;
+        /**  ActionBar title text 
+         */
+        public static final int MyActionBarTitleText=0x7f050008;
         public static final int Theme_IAPTheme=0x7f050000;
         public static final int WalletFragmentDefaultButtonTextAppearance=0x7f050003;
         public static final int WalletFragmentDefaultDetailsHeaderTextAppearance=0x7f050002;
