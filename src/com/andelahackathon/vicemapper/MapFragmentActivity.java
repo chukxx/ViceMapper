@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import nma.tablet.R;
+
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +40,8 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 
@@ -147,11 +151,18 @@ public class MapFragmentActivity extends FragmentActivity {
         }
     }
     
+    private void populateRouteList ()
+    {
+    	String [] routes;
+    	ListView lv = (ListView)findViewById(R.id.RouteList);
+		final ArrayAdapter<String> ladapter = new ArrayAdapter<String>(getBaseContext(),R.layout.route_list, R.id.route_desc, routes);
+		lv.setAdapter(ladapter);
+    }
     private void getRouteObject(JSONObject jObject)
     {
     	try
     	{
-	    	 JSONObject locations = jObject.getJSONArray("routes").getJSONObject(0).getJSONArray("legs").getJSONObject(0);
+	    	 final JSONObject locations = jObject.getJSONArray("routes").getJSONObject(0).getJSONArray("legs").getJSONObject(0);
 	         final JSONObject start_location = locations.getJSONObject("start_location");
 	         final JSONObject end_location = locations.getJSONObject("end_location");
 	        // Log.i(start_location.toString() + " - " + end_location.toString()," jsonobject route");
@@ -166,6 +177,9 @@ public class MapFragmentActivity extends FragmentActivity {
 					{
 						startLocation.setPosition(new LatLng(start_location.getDouble("lat"), start_location.getDouble("lng")));
 				        endLocation.setPosition(new LatLng(end_location.getDouble("lat"), end_location.getDouble("lng")));
+				        
+				        startLocation.setSnippet(locations.getString("start_address"));
+				        endLocation.setSnippet(locations.getString("end_address"));
 				         map.animateCamera(CameraUpdateFactory.newLatLngZoom(startLocation.getPosition(), 15f));
 					}
 					catch(JSONException e0){
