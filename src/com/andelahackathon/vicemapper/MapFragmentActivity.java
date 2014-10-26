@@ -5,23 +5,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Circle;
+
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,15 +34,10 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
-import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 
@@ -50,6 +46,8 @@ public class MapFragmentActivity extends FragmentActivity {
 	public  MapView mapView = null;
 	public  CameraUpdate cameraUpdate = null;
 	public  GoogleMap map = null;
+	private Marker startLocation = null, endLocation = null;
+	
 //	private View view = null;
 //	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 //			Bundle savedInstanceState) {
@@ -58,13 +56,13 @@ public class MapFragmentActivity extends FragmentActivity {
 //	        view = rootView;
 //	        return rootView;
 //	}
-	private String getDirectionsUrl(LatLng origin,LatLng dest){
+	private String getDirectionsUrl(/*LatLng origin,LatLng dest*/){
 		 
         // Origin of route
-        String str_origin = "origin="+origin.latitude+","+origin.longitude;
+        String str_origin = "origin="+URLEncoder.encode(Vars.getDirectionSet().get(1));//+origin.latitude+","+origin.longitude;
  
         // Destination of route
-        String str_dest = "destination="+dest.latitude+","+dest.longitude;
+        String str_dest = "destination="+URLEncoder.encode(Vars.getDirectionSet().get(0));//dest.latitude+","+dest.longitude;
  
         // Sensor enabled
         String sensor = "sensor=false";
@@ -77,7 +75,7 @@ public class MapFragmentActivity extends FragmentActivity {
  
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
- 
+        Log.i(url,"URLPATH");
         return url;
     }
 	private String downloadUrl(String strUrl) throws IOException{
@@ -148,8 +146,42 @@ public class MapFragmentActivity extends FragmentActivity {
             parserTask.execute(result);
         }
     }
+    
+    private void getRouteObject(JSONObject jObject)
+    {
+    	try
+    	{
+	    	 JSONObject locations = jObject.getJSONArray("routes").getJSONObject(0).getJSONArray("legs").getJSONObject(0);
+	         final JSONObject start_location = locations.getJSONObject("start_location");
+	         final JSONObject end_location = locations.getJSONObject("end_location");
+	        // Log.i(start_location.toString() + " - " + end_location.toString()," jsonobject route");
+	         showForNow(start_location.toString() + " - " + end_location.toString());
+	         
+	         runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					try
+					{
+						startLocation.setPosition(new LatLng(start_location.getDouble("lat"), start_location.getDouble("lng")));
+				        endLocation.setPosition(new LatLng(end_location.getDouble("lat"), end_location.getDouble("lng")));
+				         map.animateCamera(CameraUpdateFactory.newLatLngZoom(startLocation.getPosition(), 15f));
+					}
+					catch(JSONException e0){
+						e0.printStackTrace();
+					}
+				}
+			});
+	         
+    	}
+    	catch(JSONException e0)
+    	{
+    		e0.printStackTrace();
+    	}
+    }
  
-    /** A class to parse the Google Places in JSON format */
+      /** A class to parse the Google Places in JSON format */
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String,String>>> >{
  
         // Parsing the data in non-ui thread
@@ -159,7 +191,9 @@ public class MapFragmentActivity extends FragmentActivity {
             List<List<HashMap<String, String>>> routes = null;
  
             try{
+            	
                 jObject = new JSONObject(jsonData[0]);
+                getRouteObject(jObject);
                 DirectionsJSONParser parser = new DirectionsJSONParser();
  
                 // Starts parsing data
@@ -175,7 +209,10 @@ public class MapFragmentActivity extends FragmentActivity {
             ArrayList<LatLng> points = null;
             PolylineOptions lineOptions = null;
             MarkerOptions markerOptions = new MarkerOptions();
- 
+
+            //showForNow(result == null ?"no result" :result.toString());
+            if(result == null)
+            	return;
             // Traversing through all the routes
             for(int i=0;i<result.size();i++){
                 points = new ArrayList<LatLng>();
@@ -197,7 +234,7 @@ public class MapFragmentActivity extends FragmentActivity {
  
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
-                lineOptions.width(2);
+                lineOptions.width(5);
                 lineOptions.color(Color.RED);
             }
  
@@ -206,52 +243,18 @@ public class MapFragmentActivity extends FragmentActivity {
         }
     }
  
-	private void mapClick(LatLng point)
+	
+	private void showForNow(final String txt)
 	{
-		if(markerPoints.size()>1){
-            markerPoints.clear();
-            map.clear();
-        }
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_LONG).show();
+			}
+		});
 		
-        // Adding new item to the ArrayList
-        markerPoints.add(point);
-
-        // Creating MarkerOptions
-        MarkerOptions options = new MarkerOptions();
-
-        // Setting the position of the marker
-        options.position(point);
-
-        /**
-        * For the start location, the color of marker is GREEN and
-        * for the end location, the color of marker is RED.
-        */
-        if(markerPoints.size()==1){
-            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        }else if(markerPoints.size()==2){
-            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        }
-
-        // Add new marker to the Google Map Android API V2
-        map.addMarker(options);
-
-        // Checks, whether start and end locations are captured
-        if(markerPoints.size() >= 2){
-            LatLng origin = markerPoints.get(0);
-            LatLng dest = markerPoints.get(1);
-
-            // Getting URL to the Google Directions API
-            String url = getDirectionsUrl(origin, dest);
-
-            DownloadTask downloadTask = new DownloadTask();
-
-            // Start downloading json data from Google Directions API
-            downloadTask.execute(url);
-        }
-	}
-	private void showForNow(String txt)
-	{
-		Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_LONG).show();
 	}
 	
 	ArrayList<LatLng> markerPoints = null;
@@ -278,18 +281,21 @@ public class MapFragmentActivity extends FragmentActivity {
 					 	map.setMyLocationEnabled(true);
 					 	map.getUiSettings().setMyLocationButtonEnabled(true);
 					 	
-					 	map.setOnMapClickListener(new OnMapClickListener() {
-							
-							@Override
-							public void onMapClick(LatLng arg0) {
-								mapClick(arg0);								
-							}
-						});
-					 	LatLng aloc = new LatLng(6.399, 3.35);
+//					 	map.setOnMapClickListener(new OnMapClickListener() {
+//							
+//							@Override
+//							public void onMapClick(LatLng arg0) {
+//								mapClick(arg0);								
+//							}
+//						});
+					    
+					 	LatLng aloc = new LatLng(6.55, 3.40);
+					 	startLocation = map.addMarker(new MarkerOptions().position(aloc).title("Start Location").snippet("This is where you start").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+				        endLocation = map.addMarker(new MarkerOptions().position(aloc).title("End Location").snippet("This is your destination").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+				     
 					 	cameraUpdate  = CameraUpdateFactory.newLatLngZoom(aloc, 20f); //newCameraPosition(map.getCameraPosition());
-					 	
 					 	map.animateCamera(cameraUpdate);
-					 	Vars.myLocation = map.getMyLocation();
+					 	//Vars.myLocation = map.getMyLocation();
 					 	
 					 	
 					 	final Marker homeMarker = map.addMarker(new MarkerOptions()
@@ -307,6 +313,7 @@ public class MapFragmentActivity extends FragmentActivity {
 							@Override
 							public void onMyLocationChange(Location arg0) {
 								Vars.myLocation = arg0;
+								showForNow("new location "+ arg0.toString());
 							//	LatLng newpostion  = new LatLng(Vars.myLocation.getLatitude(), Vars.myLocation.getLongitude());
 							//	cameraUpdate = CameraUpdateFactory.newLatLng(newpostion);
 							//	homeMarker.setPosition(newpostion);
@@ -337,41 +344,20 @@ public class MapFragmentActivity extends FragmentActivity {
 								return false;
 							}
 						});
-					 	showForNow(Vars.myLocation.toString());
-					 	Log.d(Vars.myLocation.toString(),"myLocation");
+					 	
+					 	String url = getDirectionsUrl();
+			            DownloadTask downloadTask = new DownloadTask();
+
+			            downloadTask.execute(url);
+
+					 	//showForNow(Vars.myLocation.toString());
+					 	//Log.d(Vars.myLocation.toString(),"myLocation");
 					 }
 		        } catch (Exception e) {
 		        	Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_LONG).show();
 		        }
 
-//		        switch (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()) )
-//		        {
-//		            case ConnectionResult.SUCCESS:
-//		                Toast.makeText(getActivity(), "SUCCESS", Toast.LENGTH_SHORT).show();
-//		                mapView = (MapView) homeActivity.findViewById(R.id.map);
-//		                
-//		    			if(mapView!=null)
-//		                {   
-//		    				mapView.onCreate(savedInstanceState);
-//		                    map = mapView.getMap();
-//		                    map.getUiSettings().setMyLocationButtonEnabled(true);
-//		                    map.setMyLocationEnabled(true);
-//		                    cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(6.666f, 3.33f), 10);
-//		                    map.animateCamera(cameraUpdate);
-//		                }
-//		    			else Toast.makeText(homeActivity,"Cant find mapview",Toast.LENGTH_LONG).show();
-//		                
-//		                break;
-//		            case ConnectionResult.SERVICE_MISSING: 
-//		                Toast.makeText(getActivity(), "SERVICE MISSING", Toast.LENGTH_SHORT).show();
-//		                break;
-//		            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED: 
-//		                Toast.makeText(getActivity(), "UPDATE REQUIRED", Toast.LENGTH_SHORT).show();
-//		                break;
-//		            default:// Toast.makeText(getActivity(), GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()), Toast.LENGTH_SHORT).show();
-//		        }
-
-			
+//		       		
 			
 		}
 			@Override
