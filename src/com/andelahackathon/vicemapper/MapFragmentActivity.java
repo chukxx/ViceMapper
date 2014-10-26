@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import nma.tablet.R;
-
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -153,7 +151,7 @@ public class MapFragmentActivity extends FragmentActivity {
     
     private void populateRouteList ()
     {
-    	String [] routes;
+    	String [] routes = null;
     	ListView lv = (ListView)findViewById(R.id.RouteList);
 		final ArrayAdapter<String> ladapter = new ArrayAdapter<String>(getBaseContext(),R.layout.route_list, R.id.route_desc, routes);
 		lv.setAdapter(ladapter);

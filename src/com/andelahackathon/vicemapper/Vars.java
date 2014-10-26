@@ -1,9 +1,11 @@
 package com.andelahackathon.vicemapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.DataSnapshot;
+
 import android.location.Location;
 
 
@@ -31,6 +33,10 @@ public class Vars {
 	private static DataSnapshot snapRecords;
 
 	private static String fromLocation;
+
+	private static double longitude;
+
+	private static double latitude;
 	
 	public static void setDirectionSet(String fromLocation, String toLocation) {
 		Vars.toLocation = toLocation;
@@ -50,6 +56,19 @@ public class Vars {
 
 	public static void setSnapRecords(DataSnapshot snapRecords) {
 		Vars.snapRecords = snapRecords;
+	}
+
+	public static void setCurrentLocation(double longitude, double latitude) {
+		// TODO Auto-generated method stub
+		Vars.longitude = longitude;
+		Vars.latitude = latitude;		
+	}
+
+	public static HashMap<String, Double> getLocation() {
+		HashMap<String, Double> currentLocation = new HashMap<String, Double>();
+		currentLocation.put("longitude", Vars.longitude);
+		currentLocation.put("latitude", Vars.latitude);
+		return currentLocation;
 	}
 	
 }
