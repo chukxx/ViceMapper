@@ -7,6 +7,14 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,13 +23,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class ReportScreen extends Activity implements LocationListener {
+public class ReportScreen extends FragmentActivity implements LocationListener {
 	private Button reportBribe;
 	private Button reportRape;
 	private Button reportTheft;
@@ -31,6 +40,10 @@ public class ReportScreen extends Activity implements LocationListener {
 	protected LocationManager locationManager;
 	protected LocationListener locationListener;
 	
+	private CameraUpdate cameraUpdate = null;
+	private GoogleMap map = null;
+	private boolean isAutoLocation = false;
+	private Marker locationMarker = null;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
@@ -50,6 +63,7 @@ public class ReportScreen extends Activity implements LocationListener {
 	                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 	                    if (location != null) {
 	                    	Vars.setCurrentLocation(location.getLongitude(), location.getLatitude());
+	                    	setMapLocation(location);
 	                    }
 	                }
 	            }
@@ -61,6 +75,7 @@ public class ReportScreen extends Activity implements LocationListener {
 	                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 	                        if (location != null) {
 	                        	Vars.setCurrentLocation(location.getLongitude(), location.getLatitude());
+	                        	setMapLocation(location);
 	                        }
 	                    }
 	                }
@@ -70,9 +85,50 @@ public class ReportScreen extends Activity implements LocationListener {
         
         setContentView(R.layout.activity_report_screen);
         
+        
+        map = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
+	 	//map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+	 	map.getUiSettings().setCompassEnabled(true);
+	 	map.getUiSettings().setTiltGesturesEnabled(true);
+	 	map.getUiSettings().setZoomGesturesEnabled(true);
+
+	 	map.setBuildingsEnabled(true);
+	 	map.getUiSettings().setRotateGesturesEnabled(true);
+	 	map.setMyLocationEnabled(true);
+	 	
+	 	map.getUiSettings().setMyLocationButtonEnabled(true);
+	 	locationMarker = map.addMarker(new MarkerOptions().position(new LatLng(6.45,3.44)).title("Crime Location").snippet("Select the location, where crime was detected"));
+	 	cameraUpdate = CameraUpdateFactory.newLatLngZoom(locationMarker.getPosition(), 15f);
+	 	map.animateCamera(cameraUpdate);
+	 	
+	 	map.setOnMapClickListener(new OnMapClickListener() {
+		
+			@Override
+			public void onMapClick(LatLng arg0) {
+								
+				locationMarker.setPosition(arg0);
+				cameraUpdate = CameraUpdateFactory.newLatLngZoom(arg0, 15f);
+				map.animateCamera(cameraUpdate);
+				Vars.setCurrentLocation(arg0.longitude, arg0.latitude);
+			}
+		});
+
         loadWidgets();
     }
 	
+	private void setMapLocation(Location _location)
+	{
+		if(!isAutoLocation)
+		{
+			if(locationMarker != null)
+			{
+				locationMarker.setPosition(new LatLng(_location.getLatitude(), _location.getLongitude()));
+				cameraUpdate = CameraUpdateFactory.newLatLngZoom(locationMarker.getPosition(), 15f);
+				map.animateCamera(cameraUpdate);
+				isAutoLocation = true;
+			}
+		}
+	}
 	private Dialog loading= null;
 	
 	public void isLoading(final boolean b)
@@ -137,25 +193,12 @@ public class ReportScreen extends Activity implements LocationListener {
 				report.put("location", location);
 				report.put("timestamp", currentTimeStamp);
 				report.put("vice", type);
-<<<<<<< HEAD
-				fb.child("vice").push().setValue(report);
-				
-				//LISTEN FOR REALTIME CHANGES
-				fb.addValueEventListener(new ValueEventListener() {
-				    @Override
-				    public void onDataChange(DataSnapshot snap) {
-				    	Vars.setSnapRecords(snap);
-				    	isLoading(false);
-				    }
-				    @Override
-				    public void onCancelled(FirebaseError error) { }
-				});
-=======
+
 				Vars.dbcon().child("vice").push().setValue(report);
 				isLoading(false);
 				finish();
 				
->>>>>>> 26be0f870ea22e9e1a79005db27d8860be88504f
+
 			}
 		};
 	}
@@ -164,6 +207,7 @@ public class ReportScreen extends Activity implements LocationListener {
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
 		Vars.setCurrentLocation(location.getLongitude(), location.getLatitude());
+		setMapLocation(location);
 	}
 
 	@Override

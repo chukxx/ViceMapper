@@ -266,6 +266,10 @@ public class HomeActivity extends FragmentActivity {
 		{
 			startActivity(new Intent(this,ReportScreen.class));
 		}
+		if(item.getItemId() == R.id.action_stats)
+		{
+			//startActivity(new Intent(this,ReportScreen.class));
+		}
 		return super.onMenuItemSelected(featureId, item);
 	}
 	 public boolean onOptionsItemSelected(MenuItem item) {

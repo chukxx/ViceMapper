@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    
+    android:padding="5dp" >
+
+    <!-- ListRow Left sied Thumbnail image -->
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dp"
+        android:padding="3dp" >
+
+
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="top"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/home_icon" />
+
+    </LinearLayout>
+
+    <!-- Rightend Arrow -->
+    <!--ImageView
+        android:id="@+id/imageView1"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/arrow" /-->
+
+ <com.andelahackathon.vicemapper.TextView2
+        android:id="@+id/routeDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="5dp"
+       
+        android:text="Application Title"
+        android:textColor="#444444"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+  
+
+
+	<!--RatingBar
+	
+	    <com.andelahackathon.vicemapper.TextView2
+        android:id="@+id/viceDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/routeDesc"
+        android:layout_alignLeft="@+id/routeDesc"
+        android:text="Application Description synopsis..."
+        android:textColor="#76EE00"
+        android:textSize="12sp" />
+        android:id="@+id/ratingBar"
+        android:isIndicator="true"
+        android:layout_marginBottom="5dp"
+        android:layout_alignLeft="@+id/foodDesc"
+        android:layout_alignBottom="@+id/thumbnail"
+       	style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" /-->
+<com.andelahackathon.vicemapper.TextView2
+        android:id="@+id/viceDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_marginRight="5dp"
+		android:layout_marginTop="20dp"
+        android:textSize="12sp" />
+
+</RelativeLayout>

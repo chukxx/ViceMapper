@@ -10,11 +10,13 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -30,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,11 +42,13 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
 
 
 public class MapFragmentActivity extends FragmentActivity {
@@ -122,7 +127,7 @@ public class MapFragmentActivity extends FragmentActivity {
         }
         return data;
     }
- 
+	 List<HashMap<String,String>> routeDataCollection;
     // Fetches data from url passed
     private class DownloadTask extends AsyncTask<String, Void, String>{
  
@@ -154,34 +159,98 @@ public class MapFragmentActivity extends FragmentActivity {
         }
     }
     
+    
     private void populateRouteList (final JSONObject jObject )
     {
+    	
     	runOnUiThread(new Runnable() {
 			
 			@Override
 			public void run() {
 				try
 		    	{
+					routeDataCollection.clear();
 			    	JSONArray _routes = jObject.getJSONArray("routes");
 			    	String [] routes = new String[_routes.length()];
 			    	for(int i = 0; i < _routes.length();i++)
 			    	{
+			    		List<LatLng> pl =PolyUtil.decode(_routes.getJSONObject(i).getJSONObject("overview_polyline").getString("points"));
+			    		int c = 0;
+			    		String vt = "";
+			    		String vr = "";
+			    		String vf = "";
+			    		String vb = "";
+			    		
+			    		int ct = 0;
+			    		int cr = 0;
+			    		int cf = 0;
+			    		int cb = 0;
+			    		
+			    		for (int j = 0;j < vices.size(); j++)
+			    		{
+			    			LatLng vl = new LatLng(vices.get(j).getDouble("lat"), vices.get(j).getDouble("lng"));
+			    			if(PolyUtil.isLocationOnPath(vl, pl,false,50f))
+			    			{
+			    				c++;
+			    				String vv =vices.get(j).getString("vice"); 
+			    				if(vv.equals("bribe"))
+			    				{
+			    					cb++;
+			    				}
+			    				if(vv.equals("theft"))
+			    				{
+			    					ct++;
+			    				}
+			    				if(vv.equals("rape"))
+			    				{
+			    					cr++;
+			    				}
+			    				if(vv.equals("fight"))
+			    				{
+			    					cf++;
+			    				}
+			    				//v += ",";
+			    			}
+			    		}
+			    		String v = "";
+			    		v += cb>0?cb+ " bribe\n":"";
+			    		v += ct>0?ct+ " theft\n":"";
+			    		v += cr>0?cr+ " rape\n":"";
+			    		v += cf>0?cf+ " fight\n":"";
+			    		
+			    		int total = cb + cr + ct + cf;
+			    		//v = v.substring(0,v.length()-2);
+			    		HashMap<String,String> map = new HashMap<String, String>();
 			    		JSONObject legs = _routes.getJSONObject(i).getJSONArray("legs").getJSONObject(0);
-			    		routes[i] = _routes.getJSONObject(i).getString("summary") + " - "+legs.getJSONObject("distance").getString("text") + " in " +legs.getJSONObject("duration").getString("text") ;
+						map.put("routeDesc",_routes.getJSONObject(i).getString("summary"));
+						map.put("viceDesc", v);
+						map.put("viceCount", total+"");
+						map.put("distance",legs.getJSONObject("distance").getString("text"));
+						map.put("duration",legs.getJSONObject("duration").getString("text"));
+						
+						routeDataCollection.add(map);
+			    		//polylines.add(PolyUtil.decode(_routes.getJSONObject(i).getJSONObject("overview_polyline").getString("points")));
+			    		
+			    		//routes[i] = _routes.getJSONObject(i).getString("summary") + " c:" + c + " - "+legs.getJSONObject("distance").getString("text") + " in " +legs.getJSONObject("duration").getString("text") ;
 			    	}
 			    	//showForNow(routes.toString());
 			    	ListView lv = (ListView)findViewById(R.id.RouteList);
 			    	
-					final ArrayAdapter<String> ladapter = new ArrayAdapter<String>(getBaseContext(),R.layout.route_list, R.id.route_desc, routes);
-					lv.setAdapter(ladapter);
+			    	BinderData binderData = new BinderData(HomeActivity.Instance, routeDataCollection);
+					//final ArrayAdapter<String> ladapter = new ArrayAdapter<String>(getBaseContext(),R.layout.route_list, R.id.route_desc, routes);
+			    	lv.setAdapter(binderData);
+			    	//lv.setAdapter(ladapter);
 					
 					lv.setOnItemClickListener(new OnItemClickListener() {
 
 						@Override
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int position, long arg3) {
+							
+							//Integer.get(routeDataCollection.get(position).get("viceDesc"))
 							//String vname = ladapter.getItem(position);
-							showForNow(position+" position");
+							//showForNow(position+" position");
+							showForNow(routeDataCollection.get(position).get("viceDesc"));
 							routePosition = position;
 							if(routePolyline!=null)
 								routePolyline.remove();
@@ -192,7 +261,7 @@ public class MapFragmentActivity extends FragmentActivity {
 		    	}
 		    	catch(Exception e0)
 		    	{
-		    		
+		    		e0.printStackTrace();
 		    	}
 			}
 		});
@@ -210,7 +279,7 @@ public class MapFragmentActivity extends FragmentActivity {
 	         final JSONObject start_location = locations.getJSONObject("start_location");
 	         final JSONObject end_location = locations.getJSONObject("end_location");
 	        // Log.i(start_location.toString() + " - " + end_location.toString()," jsonobject route");
-	         showForNow(start_location.toString() + " - " + end_location.toString());
+	         //showForNow(start_location.toString() + " - " + end_location.toString());
 	         
 	         runOnUiThread(new Runnable() {
 				
@@ -268,7 +337,7 @@ public class MapFragmentActivity extends FragmentActivity {
             PolylineOptions lineOptions = null;
             MarkerOptions markerOptions = new MarkerOptions();
 
-            showForNow(result == null ?"no result" :result.size()  + " size");
+            //showForNow(result == null ?"no result" :result.size()  + " size");
             if(result == null)
             	return;
             // Traversing through all the routes
@@ -289,7 +358,8 @@ public class MapFragmentActivity extends FragmentActivity {
  
                     points.add(position);
                 }
- 
+                
+                
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
                 lineOptions.width(5);
@@ -316,12 +386,16 @@ public class MapFragmentActivity extends FragmentActivity {
 		
 	}
 	
+	private List<JSONObject> vices = null;
 	ArrayList<LatLng> markerPoints = null;
 			public void onCreate(Bundle savedInstanceState) {
 			
 
 			super.onCreate(savedInstanceState);
+			routeDataCollection = new ArrayList<HashMap<String,String>>();
 				setContentView(R.layout.activity_map_fragment);
+				
+				
 				//HomeActivity homeActivity = HomeActivity.Instance;
 				
 				markerPoints = new ArrayList<LatLng>();
@@ -404,6 +478,41 @@ public class MapFragmentActivity extends FragmentActivity {
 							}
 						});
 					 	
+					 	try
+						{
+					 		vices = new ArrayList<JSONObject>();
+					 		//String _vices = "";
+					 		for(DataSnapshot child: Vars.getSnapRecords().child("vice").getChildren())
+					 		{
+					 			double lng =  Double.parseDouble(child.child("location").child("longitude").getValue().toString());
+					 			double lat = Double.parseDouble(child.child("location").child("latitude").getValue().toString());
+					 			LatLng pos = new LatLng(lat, lng);
+					 			String vice = child.child("vice").getValue().toString();
+					 			
+					 		    GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+					            .image(BitmapDescriptorFactory.fromResource(R.drawable.marker))
+					            .position(pos, 128f, 128f);
+					 		    
+					 		    map.addGroundOverlay(newarkMap);
+					 			//map.addMarker(new MarkerOptions().position(pos).title(vice).snippet("Niggas be rappin'"));
+					 			vices.add(new JSONObject("{'vice':'"+vice+"','lat':'"+lat+"','lng':'"+lng+"'}"));
+					 			//_vices += "[{'lng':'','lat':'','vice':''}]";
+					 		}
+					 		
+					 		
+					 		
+//							vices = (HashMap<String, String>)Vars.getSnapRecords().getValue();
+//
+//							for(Map.Entry<String, String> vice: vices.entrySet())
+//							{
+//								Log.i(vice.getKey(),vice.getValue() + " vice-city" );
+//							}
+						}
+						catch(Exception e0)
+						{
+							
+							e0.printStackTrace();
+						}
 					 	String url = getDirectionsUrl();
 			            DownloadTask downloadTask = new DownloadTask();
 
@@ -419,13 +528,17 @@ public class MapFragmentActivity extends FragmentActivity {
 //		       		
 			
 		}
+
 			@Override
 			public boolean onMenuItemSelected(int featureId, MenuItem item) {
 				// TODO Auto-generated method stub
-				
-				if(item.getItemId() == R.id.action_settings)
+				if(item.getItemId() == R.id.action_report_vice)
 				{
-					
+					startActivity(new Intent(this,ReportScreen.class));
+				}
+				if(item.getItemId() == R.id.action_stats)
+				{
+					//startActivity(new Intent(this,ReportScreen.class));
 				}
 				return super.onMenuItemSelected(featureId, item);
 			}
